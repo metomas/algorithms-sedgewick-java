@@ -97,6 +97,7 @@ public class ResizableArrayStack<E> implements Stack<E> {
 
         @Override
         public E next() {
+            if (!hasNext()) throw new NoSuchElementException();
             return stack[--i];
         }
     }

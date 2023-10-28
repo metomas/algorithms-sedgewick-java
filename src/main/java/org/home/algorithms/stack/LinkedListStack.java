@@ -78,6 +78,8 @@ public class LinkedListStack<E> implements Stack<E> {
 
         @Override
         public E next() {
+            if (!hasNext()) throw new NoSuchElementException();
+
             E item = current.item;
             current = current.next;
 

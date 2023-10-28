@@ -44,7 +44,11 @@ public class FixedCapacityArrayStack<E> implements Stack<E> {
 
     private class ReverseArrayIterator implements Iterator<E> {
 
-        private int i = n;
+        private int i;
+
+        public ReverseArrayIterator() {
+            i = n;
+        }
 
         @Override
         public boolean hasNext() {
@@ -53,6 +57,7 @@ public class FixedCapacityArrayStack<E> implements Stack<E> {
 
         @Override
         public E next() {
+            if(!hasNext()) throw new NoSuchElementException();
             return stack[--i];
         }
     }

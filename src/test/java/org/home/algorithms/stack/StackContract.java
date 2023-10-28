@@ -57,6 +57,9 @@ public interface StackContract<E, T extends Stack<E>, U extends List<E>> extends
         }
 
         assertThat(stackIterator.hasNext()).isFalse();
+        assertThatException()
+                .isThrownBy(stackIterator::next)
+                .isInstanceOf(NoSuchElementException.class);
     }
 
 }
