@@ -1,6 +1,7 @@
 package org.home.algorithms.stack;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Memory usage
@@ -31,12 +32,14 @@ import java.util.Iterator;
  */
 public class ResizableArrayStack<E> implements Stack<E> {
 
+    private static final int INITIAL_CAPACITY = 8;
+
     private E[] stack;
     private int n;
 
     @SuppressWarnings("unchecked")
     public ResizableArrayStack() {
-        this.stack = (E[]) new Object[1];
+        this.stack = (E[]) new Object[INITIAL_CAPACITY];
         this.n = 0;
     }
 
