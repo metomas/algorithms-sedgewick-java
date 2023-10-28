@@ -56,14 +56,11 @@ public class ResizableArrayStack<E> implements Stack<E> {
 
     @Override
     public E pop() {
-        if (isEmpty()) {
-            throw new IllegalStateException("Empty stack");
-        }
+        if (isEmpty()) throw new NoSuchElementException("Stack underflow");
 
         E item = stack[--n];
         stack[n] = null; // avoid loitering to allow GC reclaim memory
 
-        // the question is if there is sense in resizing the stack when it is empty (n > 1)
         // the stack is always between 25% and 100% full
         if (n > 0 && n == stack.length / 4) {
             resize(stack.length / 2); // thrashing - push-pop-push-pop when an array is full
@@ -88,7 +85,11 @@ public class ResizableArrayStack<E> implements Stack<E> {
 
     private class ReverseArrayIterator implements Iterator<E> {
 
-        private int i = n;
+        private int i;
+
+        public ReverseArrayIterator() {
+            i = n;
+        }
 
         @Override
         public boolean hasNext() {

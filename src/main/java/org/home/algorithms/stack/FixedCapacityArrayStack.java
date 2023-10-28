@@ -1,6 +1,7 @@
 package org.home.algorithms.stack;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class FixedCapacityArrayStack<E> implements Stack<E> {
 
@@ -26,9 +27,7 @@ public class FixedCapacityArrayStack<E> implements Stack<E> {
 
     @Override
     public E pop() {
-        if (isEmpty()) {
-            throw new IllegalStateException("Empty stack");
-        }
+        if (isEmpty()) throw new NoSuchElementException("Stack underflow");
 
         E item = stack[--n];
         stack[n] = null; // avoid loitering to allow GC reclaim memory

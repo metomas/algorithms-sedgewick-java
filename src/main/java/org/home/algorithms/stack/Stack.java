@@ -6,6 +6,6 @@ public interface Stack<E> extends Iterable<E> {
 
     void push(E item);
 
-    E pop() throws IllegalStateException;
+    E pop();
 
 }

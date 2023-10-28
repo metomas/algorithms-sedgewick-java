@@ -1,6 +1,7 @@
 package org.home.algorithms.stack;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Memory usage
@@ -27,7 +28,7 @@ import java.util.Iterator;
  */
 public class LinkedListStack<E> implements Stack<E> {
 
-    private Node head;
+    private Node<E> head;
 
     @Override
     public boolean isEmpty() {
@@ -36,14 +37,12 @@ public class LinkedListStack<E> implements Stack<E> {
 
     @Override
     public void push(E item) {
-        head = new Node(item, head);
+        head = new Node<E>(item, head);
     }
 
     @Override
     public E pop() {
-        if (isEmpty()) {
-            throw new IllegalStateException("Empty stack");
-        }
+        if (isEmpty()) throw new NoSuchElementException("Stack underflow");
 
         E item = head.item;
         head = head.next;
@@ -56,20 +55,16 @@ public class LinkedListStack<E> implements Stack<E> {
         return new LinkedListIterator();
     }
 
-    private class Node {
-
-        private final E item;
-        private final Node next;
-
-        private Node(E item, Node next) {
-            this.item = item;
-            this.next = next;
-        }
+    private record Node<E>(E item, Node<E> next) {
     }
 
     private class LinkedListIterator implements Iterator<E> {
 
-        private Node current = head;
+        private Node<E> current;
+
+        public LinkedListIterator() {
+            this.current = head;
+        }
 
         @Override
         public boolean hasNext() {

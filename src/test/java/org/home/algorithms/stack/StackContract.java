@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatException;
@@ -15,7 +16,7 @@ public interface StackContract<E, T extends Stack<E>, U extends List<E>> extends
     U createTestItems();
 
     @Test
-    default void testStack() {
+    default void contract() {
         T stack = createInstance();
         U items = createTestItems();
 
@@ -35,14 +36,14 @@ public interface StackContract<E, T extends Stack<E>, U extends List<E>> extends
     }
 
     @Test
-    default void testUnderflow() {
+    default void underflow() {
         assertThatException()
                 .isThrownBy(createInstance()::pop)
                 .isInstanceOf(IllegalStateException.class);
     }
 
     @Test
-    default void testIterator() {
+    default void iterator() {
         T stack = createInstance();
         U items = createTestItems();
 
