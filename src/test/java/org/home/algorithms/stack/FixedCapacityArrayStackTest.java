@@ -27,12 +27,11 @@ class FixedCapacityArrayStackTest implements StackContract<String, Stack<String>
     }
 
     @Test
-    void testOverflow() {
+    void overflow() {
         Stack<String> stack = new FixedCapacityArrayStack<>(0);
 
         assertThatException()
                 .isThrownBy(() -> stack.push("a"))
-                .isInstanceOf(IllegalStateException.class)
-                .withMessage("Full stack");
+                .isExactlyInstanceOf(StackOverflowException.class);
     }
 }

@@ -19,9 +19,7 @@ public class FixedCapacityArrayStack<E> implements Stack<E> {
 
     @Override
     public void push(E item) {
-        if (n == stack.length) {
-            throw new IllegalStateException("Full stack");
-        }
+        if (n == stack.length) throw new StackOverflowException();
 
         stack[n++] = item;
     }
