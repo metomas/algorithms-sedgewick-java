@@ -1,6 +1,7 @@
 package org.home.algorithms.queue;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class ResizableArrayQueue<E> implements Queue<E> {
 
@@ -93,6 +94,8 @@ public class ResizableArrayQueue<E> implements Queue<E> {
 
         @Override
         public E next() {
+            if (!hasNext()) throw new NoSuchElementException();
+
             return queue[h++];
         }
     }

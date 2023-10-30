@@ -1,6 +1,7 @@
 package org.home.algorithms.queue;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class LinkedListQueue<E> implements Queue<E> {
 
@@ -60,6 +61,8 @@ public class LinkedListQueue<E> implements Queue<E> {
 
         @Override
         public E next() {
+            if (!hasNext()) throw new NoSuchElementException();
+
             E item = current.item;
             current = current.next;
 

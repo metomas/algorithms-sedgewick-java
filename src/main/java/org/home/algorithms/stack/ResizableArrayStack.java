@@ -35,12 +35,11 @@ public class ResizableArrayStack<E> implements Stack<E> {
     private static final int INITIAL_CAPACITY = 8;
 
     private E[] stack;
-    private int n;
+    private int n = 0;
 
     @SuppressWarnings("unchecked")
     public ResizableArrayStack() {
         this.stack = (E[]) new Object[INITIAL_CAPACITY];
-        this.n = 0;
     }
 
     @Override

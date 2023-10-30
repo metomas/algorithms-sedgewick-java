@@ -6,11 +6,7 @@ import java.util.NoSuchElementException;
 public class LinkedListBag<E> implements Bag<E> {
 
     private Node<E> head;
-    private int n;
-
-    public LinkedListBag() {
-        n = 0;
-    }
+    private int n = 0;
 
     @Override
     public void add(E item) {

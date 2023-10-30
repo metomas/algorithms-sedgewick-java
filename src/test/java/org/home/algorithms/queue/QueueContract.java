@@ -5,7 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
+import static org.assertj.core.api.Assertions.assertThatException;
 import static org.junit.jupiter.api.Assertions.*;
 
 public interface QueueContract<E, T extends Queue<E>, U extends List<E>> extends Testable<T> {
@@ -52,5 +54,8 @@ public interface QueueContract<E, T extends Queue<E>, U extends List<E>> extends
         });
 
         assertFalse(it.hasNext());
+        assertThatException()
+                .isThrownBy(it::next)
+                .isInstanceOf(NoSuchElementException.class);
     }
 }
