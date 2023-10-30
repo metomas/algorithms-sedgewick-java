@@ -26,11 +26,7 @@ public class ResizableArrayQueue<E> implements Queue<E> {
 
     @Override
     public void enqueue(E item) {
-        if (tail == queue.length) {
-            resize(2 * queue.length); // repeated doubling
-            tail = tail - head;
-            head = DEFAULT_HEAD_INDEX;
-        }
+        if (tail == queue.length) resize(2 * queue.length); // repeated doubling
 
         queue[tail++] = item;
     }
@@ -44,15 +40,8 @@ public class ResizableArrayQueue<E> implements Queue<E> {
 
         if (isEmpty()) {
             resize(DEFAULT_CAPACITY);
-            head = DEFAULT_HEAD_INDEX;
-            tail = DEFAULT_TAIL_INDEX;
-        } else {
-            int n = tail - head;
-            if (n == queue.length / 4) { // array is between 25% and 100% full
-                resize(queue.length / 2);
-                head = DEFAULT_HEAD_INDEX;
-                tail = n;
-            }
+        } else if (size() == queue.length / 4) { // array is between 25% and 100% full
+            resize(queue.length / 2);
         }
 
         return item;
@@ -71,6 +60,8 @@ public class ResizableArrayQueue<E> implements Queue<E> {
         }
 
         queue = copy;
+        tail = size();
+        head = DEFAULT_HEAD_INDEX;
     }
 
     @Override

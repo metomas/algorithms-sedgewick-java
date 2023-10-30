@@ -18,26 +18,25 @@ public interface QueueContract<E, T extends Queue<E>, U extends List<E>> extends
     default void contract() {
         T queue = createInstance();
         U items = createTestItems();
+        int expectedSize = 0;
 
         assertTrue(queue.isEmpty());
-        assertEquals(0, queue.size());
+        assertEquals(expectedSize, queue.size());
 
-        int i = 0;
         for (E item : items) {
             queue.enqueue(item);
 
             assertFalse(queue.isEmpty());
-            assertEquals(++i, queue.size());
+            assertEquals(++expectedSize, queue.size());
         }
 
-        int j = items.size();
         for (E item : items) {
             assertEquals(item, queue.dequeue());
-            assertEquals(--j, queue.size());
+            assertEquals(--expectedSize, queue.size());
         }
 
         assertTrue(queue.isEmpty());
-        assertEquals(0, queue.size());
+        assertEquals(expectedSize, queue.size());
     }
 
     @Test
