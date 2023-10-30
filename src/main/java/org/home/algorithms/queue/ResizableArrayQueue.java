@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
 
 public class ResizableArrayQueue<E> implements Queue<E> {
 
-    private static final int DEFAULT_CAPACITY = 1;
+    private static final int DEFAULT_CAPACITY = 8;
     private static final int DEFAULT_HEAD_INDEX = 0;
     private static final int DEFAULT_TAIL_INDEX = 0;
 
@@ -44,8 +44,6 @@ public class ResizableArrayQueue<E> implements Queue<E> {
 
         if (isEmpty()) {
             resize(DEFAULT_CAPACITY);
-            // in fact, there is no need to reset head and tail here
-            // head and tail are reset for consistency
             head = DEFAULT_HEAD_INDEX;
             tail = DEFAULT_TAIL_INDEX;
         } else {
