@@ -27,9 +27,7 @@ public class LinkedListQueue<E> implements Queue<E> {
 
     @Override
     public E dequeue() {
-        if (isEmpty()) {
-            throw new IllegalStateException("Empty queue");
-        }
+        if (isEmpty()) throw new NoSuchElementException("Queue underflow");
 
         E item = head.item;
         head = head.next;

@@ -15,7 +15,7 @@ public interface QueueContract<E, T extends Queue<E>, U extends List<E>> extends
     U createTestItems();
 
     @Test
-    default void testQueue() {
+    default void contract() {
         T queue = createInstance();
         U items = createTestItems();
 
@@ -41,7 +41,7 @@ public interface QueueContract<E, T extends Queue<E>, U extends List<E>> extends
     }
 
     @Test
-    default void testIterator() {
+    default void iterator() {
         T queue = createInstance();
         U items = createTestItems();
 

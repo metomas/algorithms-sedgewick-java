@@ -3,6 +3,7 @@ package org.home.algorithms.queue;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThatException;
 
@@ -19,11 +20,11 @@ class LinkedListQueueTest implements QueueContract<String, Queue<String>, List<S
     }
 
     @Test
-    void testUnderflow() {
+    void underflow() {
         assertThatException()
                 .isThrownBy(createInstance()::dequeue)
-                .isInstanceOf(IllegalStateException.class)
-                .withMessage("Empty queue");
+                .isInstanceOf(NoSuchElementException.class)
+                .withMessage("Queue underflow");
     }
 
 }

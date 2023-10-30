@@ -6,7 +6,7 @@ public interface Queue<E> extends Iterable<E> {
 
     void enqueue(E item);
 
-    E dequeue() throws IllegalStateException;
+    E dequeue();
 
     int size();
 

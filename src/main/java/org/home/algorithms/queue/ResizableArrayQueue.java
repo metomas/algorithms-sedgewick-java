@@ -37,9 +37,7 @@ public class ResizableArrayQueue<E> implements Queue<E> {
 
     @Override
     public E dequeue() throws IllegalStateException {
-        if (isEmpty()) {
-            throw new IllegalStateException("Empty queue");
-        }
+        if (isEmpty()) throw new NoSuchElementException("Queue underflow");
 
         E item = queue[head];
         queue[head++] = null; // avoid loitering
