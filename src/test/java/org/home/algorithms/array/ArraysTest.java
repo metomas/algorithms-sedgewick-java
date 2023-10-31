@@ -20,6 +20,13 @@ class ArraysTest {
         assertArrayEquals(expected, actual);
     }
 
+    @ParameterizedTest
+    @ArgumentsSource(SortingArgumentsProvider.class)
+    void insertionSort(Integer[] actual, Integer[] expected) {
+        Arrays.insertionSort(actual);
+        assertArrayEquals(expected, actual);
+    }
+
     public static class SortingArgumentsProvider implements ArgumentsProvider {
 
         @Override
