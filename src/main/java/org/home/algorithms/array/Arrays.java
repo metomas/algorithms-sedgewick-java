@@ -64,8 +64,8 @@ public final class Arrays {
      * </ul>
      */
     public static <T extends Comparable<T>> void insertionSort(T[] a) {
-        for (int i = 0; i < a.length; i++) {
-            for (int j = i; j > 0; j--) {
+        for (int i = 1; i < a.length; i++) {
+            for (int j = i; j >= 1; j -= 1) {
                 if (less(a[j], a[j - 1])) swap(a, j, j - 1);
                 else break;
             }
@@ -113,8 +113,9 @@ public final class Arrays {
 
         while (h >= 1) {
             for (int i = h; i < a.length; i++) {
-                for (int j = i; j >= h && less(a[j], a[j - h]); j -= h) {
-                    swap(a, j, j - h);
+                for (int j = i; j >= h; j -= h) {
+                    if (less(a[j], a[j - h])) swap(a, j, j - h);
+                    else break;
                 }
             }
             h /= 3;
