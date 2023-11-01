@@ -27,6 +27,13 @@ class ArraysTest {
         assertArrayEquals(expected, actual);
     }
 
+    @ParameterizedTest
+    @ArgumentsSource(SortingArgumentsProvider.class)
+    void shellSort(Integer[] actual, Integer[] expected) {
+        Arrays.shellSort(actual);
+        assertArrayEquals(expected, actual);
+    }
+
     public static class SortingArgumentsProvider implements ArgumentsProvider {
 
         @Override

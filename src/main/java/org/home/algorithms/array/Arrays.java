@@ -72,6 +72,55 @@ public final class Arrays {
         }
     }
 
+    /**
+     * <p>Shellsort with the 3x + 1 increments uses O(N^(3/2)) compares in the worst-case.</p>
+     * <p>The number of compares used by shellsort with the 3x + 1 increments is bounded by a small
+     * multiple of n times the number of increments used.</p>
+     * <p> A g-sorted array remains g-sorted after h-sorting it. So if you sort an array using 7-sort and then 3-sort
+     * the array is still 7-sorted.</p>
+     * <p>
+     * Properties
+     * <ul>
+     *     <li>in-place</li>
+     *     <li>not stable</li>
+     * </ul>
+     * <p>
+     * Time complexity
+     * <ul>
+     *     <li>Best case: ~N</li>
+     *     <li>Average case: ? - accurate model has not yet been discovered</li>
+     *     <li>Worst case: ? - accurate model has not yet been discovered</li>
+     * </ul>
+     * <p>
+     * Applications
+     * <ul>
+     *     <li>fast unless array size is huge (used for small subarrays)</li>
+     *     <li>tiny, fixed footprint for code (used in some embedded systems)</li>
+     *     <li>hardware sort prototype</li>
+     * </ul>
+     * <p>
+     * Which increment sequence to use?
+     * <ol>
+     *     <li>3x + 1</li>
+     *     <li>Sedgewick: 1, 5, 19, 41, 109, 209, etc.</li>
+     * </ol>
+     */
+    public static <T extends Comparable<T>> void shellSort(T[] a) {
+        int h = 1;
+        while (h < a.length / 3) {
+            h = 3 * h + 1;
+        }
+
+        while (h >= 1) {
+            for (int i = h; i < a.length; i++) {
+                for (int j = i; j >= h && less(a[j], a[j - h]); j -= h) {
+                    swap(a, j, j - h);
+                }
+            }
+            h /= 3;
+        }
+    }
+
     private static <T extends Comparable<T>> boolean less(T a, T b) {
         return a.compareTo(b) < 0;
     }
