@@ -1,5 +1,7 @@
 package org.home.algorithms.array;
 
+import java.util.Random;
+
 public final class Arrays {
 
     /**
@@ -109,6 +111,37 @@ public final class Arrays {
         while (h >= 1) {
             hsort(a, h);
             h /= 3;
+        }
+    }
+
+    /**
+     * <p>Knuth shuffling algorithm produces a uniformly random permutation of
+     * the input array in linear time, assuming integers uniformly at random.</p>
+     * <p>Time complexity: O(n)</p>
+     * <p>Common bug: pick integer r between 0 and N-1 instead of i and N-1.</p>
+     * <p>
+     * Incorrect implementation of shuffling a deck of cards
+     * <pre>
+     * for (int i = 1; i < 52; i++) {
+     *   int r = random(51) + 1;
+     *   swap(a, i, r);
+     * }
+     * </pre>
+     * </p>
+     * Bugs:
+     * <ol>
+     *    <li>Random number r never 52 - 52nd card can't end up in 52nd place</li>
+     *    <li>Shuffle not uniform (should be between 1 and i)</li>
+     *    <li>#random uses 32-bit seed - 2^32 possible shuffles - not enough possible shuffles, number of possible
+     *    shuffles is 52 factorial</li>
+     *    <li>Seed = milliseconds since midnight = 86.4 million shuffles</li>
+     * </ol>
+     * Exploit: After seeing 5 cards and synchronizing with server clock, can determine all future cards in real time.
+     */
+    public static <T extends Comparable<T>> void knuthShuffle(T[] a) {
+        final Random random = new Random();
+        for (int i = 0, n = a.length; i < n; i++) {
+            swap(a, i, random.nextInt(i + 1)); // [0-i]
         }
     }
 
