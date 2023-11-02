@@ -115,6 +115,67 @@ public final class Arrays {
     }
 
     /**
+     * <p>Mergesort uses at most NlgN compares and 6NlgN array accesses to sort any array of size N.</p>
+     * <p>Mergesort uses extra space proportional to N - the array aux needs to be of size N for the last merge.</p>
+     * <p>
+     * Properties
+     * <ul>
+     *     <li>not in-place - sorting algorithm is in-place if it uses <=clogN extra memory</li>
+     *     <li>stable - as long as a duplicate item is always selected from the same sub-array</li>
+     *     <li>duplicate keys - always between NlgN/2 and NlgN compares</li>
+     * </ul>
+     * </p>
+     * <p>
+     * Time complexity
+     * <ul>
+     *     <li>Best case: ~NlgN</li>
+     *     <li>Average case: ~NlgN</li>
+     *     <li>Worst case: ~NlgN</li>
+     * </ul>
+     * </p>
+     * <p>
+     * Java uses tuned mergesort for objects - assumption is that if the client uses objects then it means
+     * that space is not critically important.
+     * </p>
+     */
+    public static <T extends Comparable<T>> void mergeSort(T[] a) {
+        @SuppressWarnings("unchecked")
+        T[] aux = (T[]) java.util.Arrays.copyOf(new Object[0], a.length, a.getClass());
+
+        mergeSort(a, aux, 0, a.length - 1);
+    }
+
+    private static <T extends Comparable<T>> void mergeSort(T[] a, T[] aux, int lo, int hi) {
+        // Mergesort has too much overhead for tiny sub-arrays.
+        // One of possible improvements is to introduce a cutoff parameter (7) defining when to use a different sorting
+        // lo + CUTOFF - 1 >= hi Arrays.insertionSort(a, lo, hi); return;
+        if (lo >= hi) return;
+
+        int mid = lo + ((hi - lo) / 2);
+        mergeSort(a, aux, lo, mid);
+        mergeSort(a, aux, mid + 1, hi);
+        if (less(a[mid], a[mid + 1])) return; // helps for partially-ordered arrays
+        merge(a, aux, lo, mid, hi);
+    }
+
+    private static <T extends Comparable<T>> void merge(T[] a, T[] aux, int lo, int mid, int hi) {
+        for (int k = lo; k <= hi; k++) aux[k] = a[k];
+
+        int i = lo, j = mid + 1;
+        for (int k = lo; k <= hi; k++) {
+            if (i > mid) {
+                a[k] = aux[j++];
+            } else if (j > hi) {
+                a[k] = aux[i++];
+            } else if (less(aux[i], aux[j])) {
+                a[k] = aux[i++];
+            } else {
+                a[k] = aux[j++];
+            }
+        }
+    }
+
+    /**
      * <p>Knuth shuffling algorithm produces a uniformly random permutation of
      * the input array in linear time, assuming integers uniformly at random.</p>
      * <p>Time complexity: O(n)</p>
