@@ -145,6 +145,21 @@ public final class Arrays {
         mergeSort(a, aux, 0, a.length - 1);
     }
 
+    /**
+     * Bottom-up merge sort is about 10% slower than recursive, top-down mergesort.
+     */
+    public static <T extends Comparable<T>> void bottomUpMergeSort(T[] a) {
+        int n = a.length;
+        @SuppressWarnings("unchecked")
+        T[] aux = (T[]) java.util.Arrays.copyOf(new Object[0], n, a.getClass());
+
+        for (int sz = 1; sz < n; sz += sz) {
+            for (int lo = 0; lo < n - sz; lo += sz + sz) {
+                merge(a, aux, lo, lo + sz - 1, Math.min(lo + sz + sz - 1, n - 1));
+            }
+        }
+    }
+
     private static <T extends Comparable<T>> void mergeSort(T[] a, T[] aux, int lo, int hi) {
         // Mergesort has too much overhead for tiny sub-arrays.
         // One of possible improvements is to introduce a cutoff parameter (7) defining when to use a different sorting

@@ -41,6 +41,13 @@ class ArraysTest {
         assertArrayEquals(expected, actual);
     }
 
+    @ParameterizedTest
+    @ArgumentsSource(SortingArgumentsProvider.class)
+    void bottomUpMergeSort(Integer[] actual, Integer[] expected) {
+        Arrays.bottomUpMergeSort(actual);
+        assertArrayEquals(expected, actual);
+    }
+
     public static class SortingArgumentsProvider implements ArgumentsProvider {
 
         @Override
