@@ -48,6 +48,13 @@ class ArraysTest {
         assertArrayEquals(expected, actual);
     }
 
+    @ParameterizedTest
+    @ArgumentsSource(SortingArgumentsProvider.class)
+    void quickSort(Integer[] actual, Integer[] expected) {
+        Arrays.quickSort(actual);
+        assertArrayEquals(expected, actual);
+    }
+
     public static class SortingArgumentsProvider implements ArgumentsProvider {
 
         @Override

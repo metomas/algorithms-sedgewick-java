@@ -160,6 +160,73 @@ public final class Arrays {
         }
     }
 
+    /**
+     * <p>Quick sort uses on average ~2nlgN compares and ~(NlgN)/3 swaps to sort an array of N distinct keys.</p>
+     * <p>
+     * Properties
+     * <ul>
+     *     <li>in-place - no extra space required to swap items</li>
+     *     <li>not stable - partitioning does long distance exchanges; In order to make quicksort stable
+     *     and partitioning easier use an extra array (not worth the cost)</li>
+     *     <li>duplicate keys - goes quadratic unless partitioning stops on items equal to the partitioning item</li>
+     * </ul>
+     * </p>
+     * <p>
+     * Time complexity
+     * <ul>
+     *     <li>Best case: ~NlgN</li>
+     *     <li>Average case: ~1.39NlnN - 39% more compares than mergesort, but faster than mergesort in practice
+     *     because of less data movement</li>
+     *     <li>Worst case: ~(N^2)/2 - when input is sorted, but shuffling makes it unlikely to happen</li>
+     * </ul>
+     * </p>
+     * <p>Java uses tuned quicksort for primitive types.</p>
+     */
+    public static <T extends Comparable<T>> void quickSort(T[] a) {
+        Arrays.knuthShuffle(a); // needed for performance guarantee
+        quickSort(a, 0, a.length - 1);
+    }
+
+    private static <T extends Comparable<T>> void quickSort(T[] a, int lo, int hi) {
+        /*
+        Quicksort has too much overhead for tiny sub-arrays.
+        One of possible improvements is to introduce a cutoff parameter (10-20) defining when to use a different
+        sorting algorithm. This may improve performance by 20%.
+
+        lo + CUTOFF - 1 >= hi Arrays.insertionSort(a, lo, hi); return;
+        */
+        if (lo >= hi) return;
+
+        /*
+        Another practical improvement is to estimate median by taking median of sample
+        for a pivot item (median of three random items).
+        This change makes quicksort to perform slightly fewer compares (~12/7 nlnn) and slightly more swaps (~12/35 nlnn).
+
+        int m = medianOfThree(a, lo, lo + (hi - lo) / 2, hi);
+        swap(a, lo, m);
+        */
+
+        int j = partition(a, lo, hi);
+        quickSort(a, lo, j - 1);
+        quickSort(a, j + 1, hi);
+    }
+
+    private static <T extends Comparable<T>> int partition(T[] a, int lo, int hi) {
+        int i = lo, j = hi + 1;
+        while (true) {
+            // when duplicates are present, it is counter-intuitively better to stop on
+            // keys equal to the partitioning item's key
+            while (less(a[++i], a[lo])) if (i == hi) break;
+            // in fact, the if statement is redundant because
+            // when j is equal to lo, a[lo] == a[j] so the while condition isn't met
+            while (less(a[lo], a[--j])) if (j == lo) break;
+            if (i >= j) break;
+            swap(a, i, j);
+        }
+        swap(a, lo, j);
+        return j;  // index of item now known to be in place
+    }
+
     private static <T extends Comparable<T>> void mergeSort(T[] a, T[] aux, int lo, int hi) {
         // Mergesort has too much overhead for tiny sub-arrays.
         // One of possible improvements is to introduce a cutoff parameter (7) defining when to use a different sorting
