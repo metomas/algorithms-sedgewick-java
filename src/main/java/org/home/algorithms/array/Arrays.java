@@ -297,6 +297,27 @@ public final class Arrays {
         }
     }
 
+    /**
+     * <p>Quick-select selects kth SMALLEST item (min: k=0; max: k=N-1; median: k=N/2).</p>
+     * <p>Quick-select uses ~(N^2)/2 compares in the worst case, but (as with quicksort) the random shuffle
+     * provides a probabilistic guarantee.</p>
+     * <p>Quick-select takes linear time on average - each partitioning step splits array
+     * approximately in half (~2N compares).</p>
+     */
+    public static <T extends Comparable<T>> T quickSelect(T[] a, int k) {
+        Arrays.knuthShuffle(a);
+        int lo = 0, hi = a.length - 1;
+
+        while (lo < hi) {
+            int j = partition(a, lo, hi);
+            if (k < j) hi = j - 1;
+            else if (k > j) lo = j + 1;
+            else return a[k];
+        }
+
+        return a[k]; // lo == hi == k
+    }
+
     private static <T extends Comparable<T>> boolean less(T a, T b) {
         return a.compareTo(b) < 0;
     }

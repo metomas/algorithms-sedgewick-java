@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.ArgumentsSource;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class ArraysTest {
@@ -55,6 +56,12 @@ class ArraysTest {
         assertArrayEquals(expected, actual);
     }
 
+    @ParameterizedTest
+    @ArgumentsSource(QuickSelectArgumentsProvider.class)
+    void quickSelect(Integer[] a, int k, int expected) {
+        assertEquals(expected, Arrays.quickSelect(a, k));
+    }
+
     public static class SortingArgumentsProvider implements ArgumentsProvider {
 
         @Override
@@ -96,4 +103,17 @@ class ArraysTest {
 
     }
 
+    private static class QuickSelectArgumentsProvider implements ArgumentsProvider {
+
+        @Override
+        public Stream<? extends Arguments> provideArguments(ExtensionContext ignore) {
+            Integer[] a = {4, 5, 6, 1, 2, 3};
+            return Stream.of(
+                    arguments(a, 0, 1),
+                    arguments(a, a.length / 2, 4),
+                    arguments(a, a.length - 1, 6)
+            );
+        }
+
+    }
 }
