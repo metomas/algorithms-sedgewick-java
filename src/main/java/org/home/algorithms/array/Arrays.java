@@ -187,6 +187,57 @@ public final class Arrays {
         quickSort(a, 0, a.length - 1);
     }
 
+    /**
+     * <p>The goal of 3-way partitioning is to speed up quicksort in the presence of duplicate keys.</p>
+     * <p>3-way partitioning puts all items equal to the partitioning item in place.</p>
+     * <p>Randomized quicksort with 3-way partitioning reduces running time from linearithmic to linear
+     * in broad class of applications.</p>
+     * <p>
+     * Properties
+     * <ul>
+     *     <li>in-place</li>
+     *     <li>not stable</li>
+     * </ul>
+     * </p>
+     * <p>
+     * Time complexity
+     * <ul>
+     *     <li>Best case: ~N - a constant number of distinct keys</li>
+     *     <li>Average case: ~2NlnN - when all distinct keys</li>
+     *     <li>Worst case: ~(N^2)/2 - input is sorted, but shuffling makes it unlikely to happen</li>
+     * </ul>
+     * </p>
+     */
+    public static <T extends Comparable<T>> void threeWayQuickSort(T[] a) {
+        Arrays.knuthShuffle(a); // needed for performance guarantee
+        threeWayQuickSort(a, 0, a.length - 1);
+    }
+
+    /**
+     * Partition array into 3 parts so that:
+     * <ul>
+     *     <li>entries between lt and gt equal to partition item v</li>
+     *     <li>no larger entries to left of lt</li>
+     *     <li>no smaller entries to right of gt</li>
+     *     <li>entries between lt and i known to be equal to partition item v</li>
+     * </ul>
+     */
+    private static <T extends Comparable<T>> void threeWayQuickSort(T[] a, int lo, int hi) {
+        if (lo >= hi) return;
+
+        T v = a[lo];
+        int i = lo, lt = lo, gt = hi;
+
+        while (i <= gt) {
+            if (less(a[i], v)) swap(a, lt++, i++);
+            else if (less(v, a[i])) swap(a, gt--, i);
+            else i++;
+        }
+
+        threeWayQuickSort(a, lo, lt - 1);
+        threeWayQuickSort(a, gt + 1, hi);
+    }
+
     private static <T extends Comparable<T>> void quickSort(T[] a, int lo, int hi) {
         /*
         Quicksort has too much overhead for tiny sub-arrays.

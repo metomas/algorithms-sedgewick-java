@@ -57,6 +57,13 @@ class ArraysTest {
     }
 
     @ParameterizedTest
+    @ArgumentsSource(SortingArgumentsProvider.class)
+    void threeWayQuickSort(Integer[] actual, Integer[] expected) {
+        Arrays.threeWayQuickSort(actual);
+        assertArrayEquals(expected, actual);
+    }
+
+    @ParameterizedTest
     @ArgumentsSource(QuickSelectArgumentsProvider.class)
     void quickSelect(Integer[] a, int k, int expected) {
         assertEquals(expected, Arrays.quickSelect(a, k));
