@@ -35,8 +35,7 @@ public class BinaryHeapMaxPriorityQueue<E extends Comparable<E>> implements MaxP
 
     @Override
     public E max() {
-        if (isEmpty()) throw new NoSuchElementException("Queue underflow");
-        return queue[1];
+        return isEmpty() ? null : queue[1];
     }
 
     // at most 2lgN compares

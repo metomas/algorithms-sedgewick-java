@@ -21,14 +21,6 @@ class OrderedArrayMaxPriorityQueueTest
     }
 
     @Test
-    public void maxUnderflow() {
-        assertThatException()
-                .isThrownBy(createInstance()::max)
-                .isInstanceOf(NoSuchElementException.class)
-                .withMessage("Queue underflow");
-    }
-
-    @Test
     public void deleteMaxUnderflow() {
         assertThatException()
                 .isThrownBy(createInstance()::deleteMax)

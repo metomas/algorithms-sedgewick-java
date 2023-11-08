@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThatException;
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,6 +21,7 @@ public interface MaxPriorityQueueContract<E extends Comparable<E>,
         U items = createTestItems();
 
         assertTrue(queue.isEmpty());
+        assertNull(queue.max());
 
         items.forEach(item -> {
             queue.insert(item);
@@ -34,20 +36,14 @@ public interface MaxPriorityQueueContract<E extends Comparable<E>,
                 });
 
         assertTrue(queue.isEmpty());
-    }
-
-    @Test
-    default void maxUnderflow() {
-        assertThatException()
-                .isThrownBy(createInstance()::max)
-                .isInstanceOf(IllegalStateException.class);
+        assertNull(queue.max());
     }
 
     @Test
     default void deleteMaxUnderflow() {
         assertThatException()
                 .isThrownBy(createInstance()::deleteMax)
-                .isInstanceOf(IllegalStateException.class);
+                .isInstanceOf(NoSuchElementException.class);
     }
 
 }

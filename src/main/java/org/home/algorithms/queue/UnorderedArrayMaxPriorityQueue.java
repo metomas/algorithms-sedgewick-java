@@ -30,8 +30,7 @@ public class UnorderedArrayMaxPriorityQueue<E extends Comparable<E>> implements 
 
     @Override
     public E max() {
-        if (isEmpty()) throw new NoSuchElementException("Queue underflow");
-        return queue[maxIndex()];
+        return isEmpty() ? null : queue[maxIndex()];
     }
 
     @Override

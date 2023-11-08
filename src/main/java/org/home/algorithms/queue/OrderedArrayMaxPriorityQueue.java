@@ -31,8 +31,7 @@ public class OrderedArrayMaxPriorityQueue<E extends Comparable<E>> implements Ma
 
     @Override
     public E max() {
-        if (isEmpty()) throw new NoSuchElementException("Queue underflow");
-        return queue[n - 1];
+        return isEmpty() ? null : queue[n - 1];
     }
 
     @Override
