@@ -64,6 +64,13 @@ class ArraysTest {
     }
 
     @ParameterizedTest
+    @ArgumentsSource(SortingArgumentsProvider.class)
+    void heapSort(Integer[] actual, Integer[] expected) {
+        Arrays.heapSort(actual);
+        assertArrayEquals(expected, actual);
+    }
+
+    @ParameterizedTest
     @ArgumentsSource(QuickSelectArgumentsProvider.class)
     void quickSelect(Integer[] a, int k, int expected) {
         assertEquals(expected, Arrays.quickSelect(a, k));

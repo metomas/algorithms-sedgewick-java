@@ -214,6 +214,51 @@ public final class Arrays {
     }
 
     /**
+     * <p>Heap construction uses ≤2N compares and swaps.</p>
+     * <p>Heapsort uses ≤2NlgN compares and swaps.</p>
+     * <p>
+     * Properties:
+     * <ul>
+     *     <li>in-place</li>
+     *     <li>not stable</li>
+     * </ul>
+     * </p>
+     * <p>
+     * Time complexity:
+     * <ul>
+     *     <li>Best case: ~NlgN</li>
+     *     <li>Average case: ~2NlgN</li>
+     *     <li>Worst case: ~2NlgN</li>
+     * </ul>
+     * </p>
+     * <p>Heapsort is optimal for both time and space, but:
+     * <ul>
+     *     <li>inner loop longer than quicksort's</li>
+     *     <li>makes poor use of cache memory</li>
+     * </ul>
+     * </p>
+     */
+    public static <T extends Comparable<T>> void heapSort(T[] a) {
+        int n = a.length;
+        for (int k = n / 2; k > 0; k--) sink(a, k, n);
+
+        while (n > 1) {
+            swap(a, 0, n - 1);
+            sink(a, 1, --n);
+        }
+    }
+
+    private static <T extends Comparable<T>> void sink(T[] a, int k, int n) {
+        while (2 * k <= n) {
+            int j = 2 * k;
+            if (j < n && less(a[j - 1], a[j])) j++;
+            if (!less(a[k - 1], a[j - 1])) break;
+            swap(a, k - 1, j - 1);
+            k = j;
+        }
+    }
+
+    /**
      * Partition array into 3 parts so that:
      * <ul>
      *     <li>entries between lt and gt equal to partition item v</li>
